@@ -109,3 +109,18 @@ class Program
         alarmTimer?.Stop();
         snoozeTimer?.Stop();
     }
+
+    static void Snooze(int seconds)
+    {
+        snoozeTimer?.Stop();
+        snoozeTimer = new Timer(seconds * 1000);
+        snoozeTimer.Elapsed += (s, e) =>
+        {
+            OnAlarm?.Invoke();
+            snoozeTimer.Stop();
+        };
+        snoozeTimer.AutoReset = false;
+        snoozeTimer.Start();
+        Console.WriteLine($"Sluimer gestart voor {seconds} seconden...");
+    }
+}
