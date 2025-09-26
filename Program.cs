@@ -4,7 +4,32 @@ using System.Threading;
 
 class Program
 {
-   
+    // Delegate voor alarmacties
+    delegate void AlarmAction();
+    static AlarmAction OnAlarm;
+
+    static Timer alarmTimer;
+    static Timer snoozeTimer;
+
+    static void Main(string[] args)
+    {
+        
+        AlarmAction sound = () => Console.Beep();
+        AlarmAction message = () => Console.WriteLine("!!! WAKE UP !!!");
+        AlarmAction blink = () =>
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine("BLINK!");
+                Thread.Sleep(500);
+            }
+        };
+
+        // Delegate starten hier leeg
+        OnAlarm = null;
+
+        int alarmTimeInSeconds = 10; 
+        int snoozeTimeInSeconds = 5; 
         bool running = true;
 
         while (running)
