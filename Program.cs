@@ -90,3 +90,22 @@ class Program
             }
         }
     }
+
+    static void StartAlarm(int seconds)
+    {
+        alarmTimer?.Stop();
+        alarmTimer = new Timer(seconds * 1000);
+        alarmTimer.Elapsed += (s, e) =>
+        {
+            OnAlarm?.Invoke();
+            alarmTimer.Stop();
+        };
+        alarmTimer.AutoReset = false;
+        alarmTimer.Start();
+    }
+
+    static void StopAlarm()
+    {
+        alarmTimer?.Stop();
+        snoozeTimer?.Stop();
+    }
